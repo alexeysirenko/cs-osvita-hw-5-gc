@@ -4,8 +4,20 @@
 
 
 bool ispangram(char *s) {
-  // TODO implement this!
-  return false;
+  unsigned int seen = 0;
+  const unsigned int all_letters = (1 << 26) - 1;
+
+  while (*s) {
+    char c = *s;
+    if (c >= 'A' && c <= 'Z') {
+      seen |= (1 << (c - 'A'));
+    } else if (c >= 'a' && c <= 'z') {
+      seen |= (1 << (c - 'a'));
+    }
+    s++;
+  }
+
+  return seen == all_letters;
 }
 
 int main() {
