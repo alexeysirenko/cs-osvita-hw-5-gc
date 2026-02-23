@@ -75,9 +75,12 @@ void mark(Object* object) {
      on cycles in the object graph. */
   if (object->marked) return;
 
-  /* ADD YOUR CODE HERE */
+  object->marked = 1;
 
-  
+  if (object->type == OBJ_PAIR) {
+    mark(object->head);
+    mark(object->tail);
+  }
 }
 
 void markAll(VM* vm)
@@ -99,9 +102,10 @@ void sweep(VM* vm)
   while (*object) {
     if (!(*object)->marked) {
       /* This object wasn't reached, so remove it from the list and free it. */
-    
-      /* ADD YOUR CODE HERE */
-
+      Object* unreached = *object;
+      *object = unreached->next;
+      free(unreached);
+      vm->numObjects--;
     } else {
       /* This object was reached, so unmark it (for the next GC) and move on to the next. */
       (*object)->marked = 0;
