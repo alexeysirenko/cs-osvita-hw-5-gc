@@ -5,7 +5,7 @@
 
 bool ispangram(char *s) {
   unsigned int seen = 0;
-  const unsigned int all_letters = (1 << 26) - 1;
+  const unsigned int all_letters = (1 << 26) - 1; // 32 bits bitmask
 
   while (*s) {
     char c = *s;
